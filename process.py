@@ -3,9 +3,9 @@ import os
 import re
 import json
 
-maildir = "test"
+maildir = "test-small"
 
-# TODO: pass in file as argument
+# TODO: pass in file as argument?
 
 # A word map from word -> {author: [list of emails]}
 words_map = {}
@@ -43,5 +43,5 @@ for filename in os.listdir(maildir):
 print ("exporting map...")
 
 # dump the map to disk
-with open('mail_map.json', 'w') as outfile:
+with open('mail_map_small.json', 'w') as outfile:
     json.dump(words_map, outfile)

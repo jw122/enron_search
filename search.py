@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # TODO: this should be done only once, offline
     trie = Trie()
 
-    with open('mail_map.json') as f:
+    with open('mail_map_small.json') as f:
         data = json.load(f)
         for word in data:
             trie.insert(word, data[word])
