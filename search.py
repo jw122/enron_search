@@ -1,63 +1,29 @@
 import json
 import argparse
-
-'''
-A trie with nodes referencing the emails containing them
-'''
-class Node:
-    def __init__(self):
-        self.children = {}
-        self.wordExists = False
-        self.emails = {}
-
-class Trie(object):
-
-    def __init__(self):
-        self.root = Node()
-
-    def insert(self, word, emails):
-        currNode = self.root
-        for char in word:
-            if char not in currNode.children:
-                currNode.children[char] = Node()
-            currNode = currNode.children[char]
-        currNode.wordExists = True
-        currNode.emails = emails
-
-    def search(self, word):
-        currNode = self.root
-        for char in word:
-            if char not in currNode.children:
-                return False
-            currNode = currNode.children[char]
-        return currNode.wordExists, currNode.emails
-
-
-    def startsWith(self, prefix):
-        currNode = self.root
-        for char in prefix:
-            if char not in currNode.children:
-                return False
-            currNode = currNode.children[char]
-        return True
-
+import trie
+import pickle
 
 if __name__ == '__main__':
-    # parse search term
-    parser = argparse.ArgumentParser()
-    parser.add_argument('word',
-                    help='a word to search in emails')
-    args = parser.parse_args()
-    search_term = args.word
+    # Open the trie file created by process.py
+    print("Initializing....")
+    fileObject = open('email_trie','rb')
 
-    # CREATES THE TRIE
-    # TODO: this should be done only once, offline
-    trie = Trie()
+    # load the object from the file into "tr"
+    tr = pickle.load(fileObject)
+    print("loaded trie: ", tr)
+    print("Please enter a word to search for. Hit 'Enter' with no search term to exit")
 
-    with open('mail_map_small.json') as f:
-        data = json.load(f)
-        for word in data:
-            trie.insert(word, data[word])
+    # Initialize prompt for user
+    while True:
+        search_term = input("search term: ")
+        if len(search_term) == 0:
+            break
+        else:
+            res = tr.search(search_term)
+            if not res:
+                print("Word {} was not found. Try another one!".format(search_term))
+            else:
+                print("Word found in the following people's emails: ", res[1])
 
-    # Actual execution of search query
-    print("search result: ", trie.search(search_term))
+
+    # the term " " can be found in the following emails
