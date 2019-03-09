@@ -1,6 +1,9 @@
 import json
 import argparse
 
+'''
+A trie with nodes referencing the emails containing them
+'''
 class Node:
     def __init__(self):
         self.children = {}
@@ -40,20 +43,21 @@ class Trie(object):
 
 
 if __name__ == '__main__':
-
+    # parse search term
     parser = argparse.ArgumentParser()
     parser.add_argument('word',
                     help='a word to search in emails')
     args = parser.parse_args()
     search_term = args.word
 
+    # CREATES THE TRIE
+    # TODO: this should be done only once, offline
     trie = Trie()
 
-    # CREATES THE TRIE 
-    # TODO: this should be done only once, offline
     with open('mail_map.json') as f:
         data = json.load(f)
         for word in data:
             trie.insert(word, data[word])
 
+    # Actual execution of search query
     print("search result: ", trie.search(search_term))
