@@ -1,9 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 		<title>Enron Emails</title>
-	<body>
-    <h1>Search through Enron email data</h1>
-	</body>
 </head>
+
+<body>
+  <div class="jumbotron">
+    <h1>Search through Enron email data</h1>
+
+  </div>
+
+  <div class="container">
+    <div style="display:inline-block">
+      <!-- <form>
+        <input id=search_field type=text size=20 name=proglang>
+        <a href=# id=process_input><button class='btn btn-default'>Submit</button></a>
+      </form> -->
+
+      <form class="form-inline">
+        <div class="form-group mx-sm-3 mb-2">
+          <input type="text" class="form-control" id="search_field" placeholder="Enter a word">
+        </div>
+        <a href=# id=process_input><button type="submit" class="btn btn-primary mb-2">Submit</button></a>
+      </form>
+    </div>
+
+
+      <div style="display:inline-block; margin-left:30%">
+          {% if result %}
+            <p id=result></p>
+          {% else %}
+            <p>Enter a query term.</p>
+          {% endif %}
+      </div>
+  </div>
+
+
+</body>
+
+
 </html>
