@@ -2,12 +2,10 @@
 
 A trie-based implementation of a mini search engine for Enron emails
 
-## process.py
-From the Enron email dataset, creates a mapping of word to individuals, and word to emails (for each individual). Loads the words and emails into a trie for searching through emails by words and prefixes.
+## Usage
+Clone this repository. Run `python search.py`
 
-## search.py
-Usage: `python search.py`
-Queries the trie for the search term, returning a list of senders and emails that contain that term
+After initialization, try searching for a term in the emails.
 
 Example:
 ```
@@ -15,7 +13,24 @@ $ python search.py
 Initializing....
 
 Please enter a word to search for. Hit 'Enter' with no search term to exit
-
 search term: hi
-Word found in the following people's emails:  ['arnold-j', 'lavorato-j', 'symes-k', 'wolfe-j', 'mcconnell-m']
+emails by arnold-j containing 'hi': ['287.', '363.', '868.']
+emails by lavorato-j containing 'hi': ['86.', '419.']
+emails by symes-k containing 'hi': ['1368.', '3117.', '1388.', '1108.', '1365.', '1067.', '3041.', '2550.', '1387.', '2528.', '2760.', '1360.', '3115.']
+emails by wolfe-j containing 'hi': ['36.', '117.']
+emails by mcconnell-m containing 'hi': ['1013.', '1025.']
+
+search term: bye
+Word bye was not found. Try another one!
 ```
+
+
+### process.py
+From the Enron email dataset, creates the following mappings:  
+`word -> individuals with this word in their mailbox`  
+The words in this map are used to create a trie and "autocomplete" functionality
+
+`word -> email id's containing word (for each individual)`
+
+### search.py
+Queries the trie for the search term, returning a list of individuals whose inboxes contain that term. Then, get the exact email id's for each individual
