@@ -1,16 +1,25 @@
-# Go through the maildir. For each individual, save the content from all_contents
+import argparse
 import os
 import re
 import json
 import trie
 import pickle
 
-maildir = "test"
+# maildir = "test"
 
-# TODO: pass in file as argument?
+# Takes in file as argument
+parser = argparse.ArgumentParser(description='Process email data from a folder')
+parser.add_argument('data_path',
+                    help='Path containing email data')
+args = parser.parse_args()
+maildir = args.data_path
+print("Loading email data from: ", maildir)
 
-# A word map from word -> {author: [list of emails]}
+
+# A word map from word -> [authors]
 words_map = {}
+metadata = ['Message-ID:', 'Date:', 'From:', 'To:', 'cc:', 'Subject:', 'Mime-Version:', 'Content-Type:', 'Content-Transfer-Encoding:', 'X-From:', 'X-To:', 'X-cc:', 'X-bcc:', 'X-Folder:', 'X-Origin:', 'X-FileName:', '@', '________', '-----']
+# Go through the maildir. For each individual, save the content from all_contents
 for filename in os.listdir(maildir):
     # Loop through all the individuals in the maildir
     person = filename
@@ -26,16 +35,27 @@ for filename in os.listdir(maildir):
         # Open the files in this person's "all_documents" folder
         for file in os.listdir(all_docs):
             filePath = all_docs + "/" + file
-            with open(filePath) as f:
+            with open(filePath, encoding='utf-8', errors='ignore') as f:
                 contents = f.readlines()
-                for line in contents:
+                for line in contents: # process line content
+                    is_metadata = False
+                    for m in metadata:
+                        if m in line:
+                            is_metadata = True
+                    if is_metadata:
+                        continue
+
                     words = line.split()
-                    # TODO: can scan for delimiter to avoid words in email metadata
+                    words = [w.lower() for w in words]
+
                     for w in words:
-                        # Get rid of non alphanumeric characters
-                        word = re.sub(r'\W+', '', w)
-                        # Add the word and its author + email id to the map
-                        if len(word) > 0:
+                        # Get rid of non alphabet characters
+                        regex = re.compile('[^a-zA-Z]')
+                        word = regex.sub('', w)
+
+                        # Update person_word_map and words_map
+                        if len(word) > 1:
+                            # print("word: ", word)
                             if word not in person_word_map:
                                 person_word_map[word] = [file]
                             elif file not in person_word_map[word]:
@@ -53,10 +73,6 @@ for filename in os.listdir(maildir):
 # print("words map: ", words_map)
 print ("creating trie from word map...")
 
-# dump the map to disk
-# with open('mail_map_small.json', 'w') as outfile:
-#     json.dump(words_map, outfile)
-
 # CREATE THE TRIE
 email_trie = trie.Trie()
 
@@ -64,7 +80,7 @@ for word in words_map:
     email_trie.insert(word, words_map[word])
 
 # save trie to disk
-file_name = "email_trie"
+file_name = "email_trie_small"
 # open the file for writing
 fileObject = open(file_name,'wb')
 print("email trie: ", email_trie)

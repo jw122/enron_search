@@ -12,11 +12,12 @@ def search(search_term):
         for p in people_list[1]:
             with open('people/' + p) as f:
                 data = json.load(f)
-                print("emails by {} containing '{}': {}".format(p, search_term, data[search_term]))
+                if search_term in data:
+                    print("emails by {} containing '{}': {}".format(p, search_term, data[search_term]))
 
     if tr.prefixExists(search_term):
         getCompletions(search_term)
-        
+
 def getCompletions(search_term):
     # hasPrefix = tr.prefixExists(search_term)
     # if hasPrefix:
@@ -25,7 +26,7 @@ def getCompletions(search_term):
 if __name__ == '__main__':
     # Open the trie file created by process.py
     print("Initializing....")
-    file_object = open('email_trie','rb')
+    file_object = open('email_trie_small','rb')
 
     # load the object from the file into "tr"
     tr = pickle.load(file_object)
