@@ -51,13 +51,14 @@
 					  term: inpt,
 					}, function(data) {
             $("#resultDiv").empty();
+            $("#resultDiv").append(`<h4>Emails containing keyword "${inpt}":</h4>`)
 						console.log("email results: ", data.result)
 
             Object.keys(data.result).forEach(function(key, index){
               // console.log("key: ", key)
               $("#resultDiv").append(`
-                <div class="card" style="width: 18rem; margin-top:3%">
-                <div class="card-header">
+                <div class="card bg-dark mb-3" style="width: 18rem; margin-top:3%">
+                <div class="card-header text-white">
                   ${key}
                 </div>
                   <ul id=line-"${key}" class="list-group list-group-flush">
