@@ -1,8 +1,11 @@
 # Enron Search
 
-A trie-based implementation of a mini search engine for Enron emails
+![](enron-search.gif)
 
-## Usage
+A mini search engine for Enron emails
+
+
+## Local usage 
 Clone this repository. Run `python search_local.py`
 
 After initialization, try searching for a term in the emails.
