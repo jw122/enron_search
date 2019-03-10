@@ -35,7 +35,7 @@ class Trie(object):
             if char not in currNode.children:
                 return False
             # print("found char: ", char)
-            print("children: ", currNode.children)
+            # print("children: ", currNode.children)
             currNode = currNode.children[char]
         return True
 
@@ -47,6 +47,7 @@ class Trie(object):
         # find options for remaining characters
         completions = []
         self.getOptions(prefix, currNode, completions)
+        print("------------")
         print("completions for this term: ", completions)
 
     def getOptions(self, prefix, node, options):

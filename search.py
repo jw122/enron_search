@@ -5,9 +5,6 @@ import pickle
 
 
 def search(search_term):
-    # hasPrefix = tr.prefixExists(search_term)
-    # print(hasPrefix)
-
     people_list = tr.search(search_term)
     if not people_list:
         print("Word {} was not found. Try another one!".format(search_term))
@@ -17,7 +14,13 @@ def search(search_term):
                 data = json.load(f)
                 print("emails by {} containing '{}': {}".format(p, search_term, data[search_term]))
 
-        tr.getChildren(search_term)
+    if tr.prefixExists(search_term):
+        getCompletions(search_term)
+        
+def getCompletions(search_term):
+    # hasPrefix = tr.prefixExists(search_term)
+    # if hasPrefix:
+    tr.getChildren(search_term)
 
 if __name__ == '__main__':
     # Open the trie file created by process.py
@@ -38,5 +41,3 @@ if __name__ == '__main__':
             break
         else:
             search(search_term)
-
-    # the term " " can be found in the following emails
