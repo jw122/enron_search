@@ -29,11 +29,31 @@ class Trie(object):
             currNode = currNode.children[char]
         return currNode.wordExists, currNode.emails
 
-
-    def startsWith(self, prefix):
+    def prefixExists(self, prefix):
         currNode = self.root
         for char in prefix:
             if char not in currNode.children:
                 return False
+            # print("found char: ", char)
+            print("children: ", currNode.children)
             currNode = currNode.children[char]
         return True
+
+    def getChildren(self, prefix):
+        currNode = self.root
+        for char in prefix:
+            if char in currNode.children:
+                currNode = currNode.children[char]
+        # find options for remaining characters
+        completions = []
+        self.getOptions(prefix, currNode, completions)
+        print("completions for this term: ", completions)
+
+    def getOptions(self, prefix, node, options):
+
+        if not node.children:
+            options.append(prefix)
+
+        for c in node.children:
+            candidate = prefix + c
+            self.getOptions(candidate, node.children[c], options)
