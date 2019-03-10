@@ -3,7 +3,7 @@
 A trie-based implementation of a mini search engine for Enron emails
 
 ## Usage
-Clone this repository. Run `python search.py`
+Clone this repository. Run `python search_local.py`
 
 After initialization, try searching for a term in the emails.
 
@@ -26,15 +26,14 @@ search term: bye
 Word bye was not found. Try another one!
 ```
 
+Files ending with `local.py` are intended for local testing and use a smaller subset of the email dataset.
 
-### process.py
+### process_local.py
 From the Enron email dataset, creates the following mappings:  
 `word -> individuals with this word in their mailbox`  
-The words in this map are used to create a trie and "autocomplete" functionality
+The words in this map are used to create a trie for "autocomplete" functionality
 
-`word -> email id's containing word (for each individual)`
+`word -> email id's containing word` (for each individual, saved in people/ directory)
 
-### search.py
-Queries the trie for the search term, returning a list of individuals whose inboxes contain that term. Then, list the exact email id's for each individual
-
-Output the other terms in the email corpus containing the user's input (prefix)
+### search_local.py
+Uses trie to generate completions. Queries the word-to-people mapping, returning a list of individuals whose inboxes contain that term. Then, fetch the exact email id's containing that term in each individual's inbox
