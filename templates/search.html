@@ -1,0 +1,31 @@
+<script type=text/javascript>
+  $(function(){
+
+    $('#search_field').autocomplete({
+        source: function(request, response) {
+          console.log("request: ", request)
+
+            var req = $.ajax({
+                url: '/get_completions',
+                dataType: 'json',
+                data: {
+                    search_term : request.term
+                },
+
+                  success: function (data) {
+                    var results = []
+                    console.log("data on success: ", data.result)
+                    response(data.result)
+                },
+                error: function(err, result) {
+                      alert("Error");
+                }
+            })
+        },
+        minLength: 1,
+        select: function(event, ui) {
+          console.log("selected")
+        } //do something with the selected option
+    });
+  })
+</script>

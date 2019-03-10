@@ -49,6 +49,7 @@ class Trie(object):
         self.getOptions(prefix, currNode, completions)
         print("------------")
         print("completions for this term: ", completions)
+        return completions
 
     def getOptions(self, prefix, node, options):
 
