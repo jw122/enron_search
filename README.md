@@ -26,7 +26,7 @@ search term: bye
 Word bye was not found. Try another one!
 ```
 
-Files ending with `local.py` are intended for local testing and use a smaller subset of the email dataset.
+Files ending with `local.py` are intended for local testing and use a smaller subset of the email data.
 
 ### process_local.py
 From the Enron email dataset, creates the following mappings:  
