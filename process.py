@@ -71,18 +71,31 @@ for filename in os.listdir(maildir):
             json.dump(person_word_map, f)
 
 # print("words map: ", words_map)
-print ("creating trie from word map...")
 
 # CREATE THE TRIE
-email_trie = trie.Trie()
+# email_trie = trie.Trie()
+word_trie = trie.Trie()
 
 for word in words_map:
-    email_trie.insert(word, words_map[word])
+    # email_trie.insert(word, words_map[word])
+    word_trie.insert(word, None)
 
 # save trie to disk
-file_name = "email_trie_small"
+print("saving word map...")
+with open('word_map.json', 'w') as f:
+    json.dump(words_map, f)
+
+# file_name = "email_trie_small.pkl"
+# # open the file for writing
+# fileObject = open(file_name,'wb')
+# print("email trie: ", email_trie)
+# pickle.dump(email_trie,fileObject,-1)
+# fileObject.close()
+
+print("saving word trie...")
+file_name = "word_trie.pkl"
 # open the file for writing
 fileObject = open(file_name,'wb')
-print("email trie: ", email_trie)
-pickle.dump(email_trie,fileObject)
+print("word trie: ", word_trie)
+pickle.dump(word_trie,fileObject,-1)
 fileObject.close()

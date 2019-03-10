@@ -2,32 +2,33 @@ import json
 import argparse
 import trie
 import pickle
-
+import os
 
 def search(search_term):
-    people_list = tr.search(search_term)
-    if not people_list:
+    if search_term not in word_map:
         print("Word {} was not found. Try another one!".format(search_term))
     else:
-        for p in people_list[1]:
-            with open('people/' + p) as f:
+        people_list = word_map[search_term]
+        for p in people_list:
+            with open('people_small/' + p) as f:
                 data = json.load(f)
                 if search_term in data:
                     print("emails by {} containing '{}': {}".format(p, search_term, data[search_term]))
 
-    if tr.prefixExists(search_term):
-        getCompletions(search_term)
+    get_completions(search_term)
 
-def getCompletions(search_term):
-    # hasPrefix = tr.prefixExists(search_term)
-    # if hasPrefix:
+def get_completions(search_term):
     tr.getChildren(search_term)
 
 if __name__ == '__main__':
-    # Open the trie file created by process.py
     print("Initializing....")
-    file_object = open('email_trie_small','rb')
+    # open the mapping from words to individuals
+    with open('word_map.json') as f:
+        word_map = json.load(f)
 
+    # Open the word trie file created by process.py
+    trie_data = os.environ.get('WORD_TRIE','word_trie.pkl')
+    file_object = open(trie_data,'rb')
     # load the object from the file into "tr"
     tr = pickle.load(file_object)
     print("loaded trie: ", tr)
