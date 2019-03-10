@@ -12,13 +12,15 @@ Example:
 $ python search.py
 Initializing....
 
-Please enter a word to search for. Hit 'Enter' with no search term to exit
-search term: hi
-emails by arnold-j containing 'hi': ['287.', '363.', '868.']
-emails by lavorato-j containing 'hi': ['86.', '419.']
-emails by symes-k containing 'hi': ['1368.', '3117.', '1388.', '1108.', '1365.', '1067.', '3041.', '2550.', '1387.', '2528.', '2760.', '1360.', '3115.']
-emails by wolfe-j containing 'hi': ['36.', '117.']
-emails by mcconnell-m containing 'hi': ['1013.', '1025.']
+search term: life
+emails by arnold-j containing 'life': ['1029.', '248.', '1005.', '1399.', '606.', '732.', '605.', '162.', '354.', '379.', '406.', '361.', '408.', '136.', '609.']
+emails by lavorato-j containing 'life': ['112.', '430.', '289.', '277.']
+emails by townsend-j containing 'life': ['81.']
+emails by symes-k containing 'life': ['1994.', '1722.', '50.', '2803.', '3293.', '1721.', '1483.', '1886.', '84.', '2688.', '2851.', '2779.', '2438.', '2209.', '1127.', '156.', '3124.', '2777.', '69.', '2495.', '959.', '63.', '2510.', '1212.', '895.', '984.', '2327.', '2806.', '2727.', '1586.', '2641.', '2796.', '2775.', '1202.', '1284.', '2854.', '2817.', '1267.', '2757.', '1122.', '2778.', '2439.', '2528.', '1263.', '1493.', '3039.', '2689.', '1398.', '2801.', '2959.', '337.', '2802.', '2217.']
+emails by wolfe-j containing 'life': ['109.', '190.', '56.']
+emails by mcconnell-m containing 'life': ['838.', '474.', '601.', '642.', '854.', '920.', '574.', '599.', '1013.', '935.', '783.', '1135.', '562.', '122.', '853.', '378.', '668.', '851.', '837.', '1134.', '1025.', '793.', '247.', '843.', '489.', '844.', '847.', '1068.', '856.', '600.']
+------------
+completions for this term:  ['lifeblood', 'lifesaver', 'lifestyle', 'lifesized', 'lifeas', 'lifelong', 'lifeless', 'lifetime']
 
 search term: bye
 Word bye was not found. Try another one!
@@ -33,4 +35,6 @@ The words in this map are used to create a trie and "autocomplete" functionality
 `word -> email id's containing word (for each individual)`
 
 ### search.py
-Queries the trie for the search term, returning a list of individuals whose inboxes contain that term. Then, get the exact email id's for each individual
+Queries the trie for the search term, returning a list of individuals whose inboxes contain that term. Then, list the exact email id's for each individual
+
+Output the other terms in the email corpus containing the user's input (prefix)
