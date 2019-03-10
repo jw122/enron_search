@@ -4,18 +4,22 @@ import trie
 import pickle
 import os
 
-def search(search_term):
+def search(search_term, word_map):
+    result = {}
+
     if search_term not in word_map:
         print("Word {} was not found. Try another one!".format(search_term))
     else:
         people_list = word_map[search_term]
         for p in people_list:
-            with open('people_small/' + p) as f:
+            if len(result) == 20:
+                break
+            with open('people/' + p) as f:
                 data = json.load(f)
                 if search_term in data:
-                    print("emails by {} containing '{}': {}".format(p, search_term, data[search_term]))
-
-    get_completions(search_term)
+                    # print("emails by {} containing '{}': {}".format(p, search_term, data[search_term]))
+                    result[p] = data[search_term]
+    return result
 
 def get_completions(search_term):
     tr.getChildren(search_term)

@@ -1,6 +1,5 @@
 <script type=text/javascript>
   $(function(){
-
     $('#search_field').autocomplete({
         source: function(request, response) {
           console.log("request: ", request)
@@ -28,4 +27,68 @@
         } //do something with the selected option
     });
   })
+
+		$(function(){
+      var timer;
+      var typeInterval = 1000;
+      var input = $('#search_field')
+
+      $(input).on('keyup', function () {
+        clearTimeout(timer);
+        timer = setTimeout(inputDone, typeInterval);
+      });
+
+      $(input).on('keydown', function () {
+        clearTimeout(timer);
+      });
+
+      //user is done typing
+      function inputDone () {
+          var inpt = input.val()
+			  	console.log("key pressed: ", inpt)
+			  	if (inpt.length > 0) {
+					$.getJSON('/get_emails', {
+					  term: inpt,
+					}, function(data) {
+            $("#resultDiv").empty();
+						console.log("email results: ", data.result)
+
+            Object.keys(data.result).forEach(function(key, index){
+              // console.log("key: ", key)
+              $("#resultDiv").append(`
+                <div class="card" style="width: 18rem; margin-top:3%">
+                <div class="card-header">
+                  ${key}
+                </div>
+                  <ul id=line-"${key}" class="list-group list-group-flush">
+                      <li class="list-group-item">${data.result[key]}</li>
+                  </ul>
+                </div>
+                `);
+            })
+
+					});
+					return false;
+			  	}
+      }
+
+      // USE THIS IF SEARCHING AT EACH KEYSTROKE, NO WAIT FOR INPUT PAUSE
+			// $('#search_field').keyup(function(event) {
+			// 	var inpt = $('#search_field').val()
+			//   	console.log("key pressed: ", inpt)
+			//   	if (inpt.length > 0) {
+			// 		$.getJSON('/get_emails', {
+			// 		  term: inpt,
+			// 		}, function(data) {
+			// 			console.log("email results: ", data.result)
+			// 		  $("#result").text(JSON.stringify(data.result));
+			// 		});
+			// 		return false;
+			//   	}
+      //
+			// });
+
+		});
+
+
 </script>

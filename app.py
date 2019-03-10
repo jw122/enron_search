@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, jsonify
 import json
 import argparse
 import trie
-import search_local
+import search
 import pickle
 
 app = Flask(__name__)
@@ -34,6 +34,16 @@ def get_completions():
 		q = request.args.get('search_term', 0, type=str)
 		# Use the trie (prefix tree) to find completions
 		res = word_trie.getChildren(q)[:10]
+		return jsonify(result=res)
+
+	except Exception as e:
+		return str(e)
+
+@app.route('/get_emails')
+def get_emails():
+	try:
+		q = request.args.get('term', 0, type=str)
+		res = search.search(q, word_map)
 		return jsonify(result=res)
 
 	except Exception as e:

@@ -22,7 +22,7 @@
         <a href=# id=process_input><button class='btn btn-default'>Submit</button></a>
       </form> -->
 
-      <form class="form-inline">
+      <form class="form-inline" style="margin-top:20%">
         <div class="form-group mx-sm-3 mb-2">
           <input type="text" class="form-control" id="search_field" placeholder="Enter a word">
         </div>
@@ -30,12 +30,10 @@
       </form>
     </div>
 
-    <div style="display:inline-block; margin-left:30%">
-        {% if result %}
-          <p id=result></p>
-        {% else %}
-          <p>Enter a query term.</p>
-        {% endif %}
+    <div style="display:inline-block; margin-left:60%; width:40%">
+        <div id="resultDiv">
+
+        </div>
     </div>
   </div>
 
