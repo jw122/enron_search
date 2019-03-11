@@ -30,7 +30,6 @@ for filename in os.listdir(maildir):
         continue
     else:
         all_docs = person_dir + "/" + "all_documents"
-        person_word_map = {}
 
         # Open the files in this person's "all_documents" folder
         for file in os.listdir(all_docs):
@@ -53,22 +52,18 @@ for filename in os.listdir(maildir):
                         regex = re.compile('[^a-zA-Z]')
                         word = regex.sub('', w)
 
-                        # Update person_word_map and words_map
+                        # Updatewords_map
                         if len(word) > 1:
                             # print("word: ", word)
-                            if word not in person_word_map:
-                                person_word_map[word] = [file]
-                            elif file not in person_word_map[word]:
-                                person_word_map[word].append(file)
-
                             if word not in words_map:
-                                words_map[word] = [person]
+                                words_map[word] = {person: []}
+                                words_map[word][person].append(file)
+                                # words_map[word] = [person]
                             elif person not in words_map[word]:
-                                words_map[word].append(person)
+                                words_map[word][person] = [file]
+                            else:
+                                words_map[word][person].append(file)
 
-        # print("person word map: ", person_word_map)
-        with open('people/' + person, 'w') as f:
-            json.dump(person_word_map, f)
 
 # print("words map: ", words_map)
 
