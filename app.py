@@ -75,6 +75,8 @@ def search():
         keyword = request.args.get('term', 0, type=str)
         if keyword in word_map:
             return jsonify(result=word_map[keyword])
+        else:
+            return ('', 204)
     except Exception as e:
         return str(e)
 
