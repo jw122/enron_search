@@ -18,7 +18,7 @@ print("Loading email data from: ", maildir)
 
 # A word map from word -> [authors]
 words_map = {}
-metadata = ['Message-ID:', 'Date:', 'From:', 'To:', 'cc:', 'Subject:', 'Mime-Version:', 'Content-Type:', 'Content-Transfer-Encoding:', 'X-From:', 'X-To:', 'X-cc:', 'X-bcc:', 'X-Folder:', 'X-Origin:', 'X-FileName:', '@', '________', '-----']
+metadata = ['Message-ID:', 'http', 'Date:', 'From:', 'To:', 'cc:', 'Subject:', 'Mime-Version:', 'Content-Type:', 'Content-Transfer-Encoding:', 'X-From:', 'X-To:', 'X-cc:', 'X-bcc:', 'X-Folder:', 'X-Origin:', 'X-FileName:', '@', '________', '-----']
 # Go through the maildir. For each individual, save the content from all_contents
 for filename in os.listdir(maildir):
     # Loop through all the individuals in the maildir
@@ -44,7 +44,7 @@ for filename in os.listdir(maildir):
                     if is_metadata:
                         continue
 
-                    words = line.split()
+                    words = re.split('\W+', line)
                     words = [w.lower() for w in words]
 
                     for w in words:
