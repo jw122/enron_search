@@ -23,7 +23,8 @@
         },
         minLength: 1,
         select: function(event, ui) {
-          getResults()
+          console.log("selected: ", ui.item.value)
+          getResults(ui.item.value)
         }
     });
   })
@@ -59,8 +60,12 @@
 		});
 
       //user is done typing
-      function getResults () {
-          var inpt = $('#search_field').val()
+      function getResults (inpt) {
+          if (!inpt) {
+            // If no input passed in from selection
+            inpt = $('#search_field').val()
+          }
+          // var inpt = $('#search_field').val()
 			  	console.log("key pressed: ", inpt)
 			  	if (inpt.length > 0) {
 					$.getJSON('/search', {
