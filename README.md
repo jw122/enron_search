@@ -1,8 +1,18 @@
 # Enron Search
 
-A trie-based implementation of a mini search engine for Enron emails
+![](enron-search.gif)
 
-## Usage
+A mini search engine for Enron emails
+
+## About
+The [Enron email dataset](https://www.cs.cmu.edu/~./enron/) is a large folder containing emails exchanged by senior management of Enron, organized into folders. This became public following the organization's fraud and corruption scandal, and contains a total of about 0.5M messages.
+
+## The Challenge
+This goal of this project is to implement a method of searching through the large Enron email dataset. It should behave like a lightweight search engine, with features like autocomplete and efficiency. It is meant for search _on a mobile device_, without connection to the internet and limited memory.
+
+(Web client--still simulating local functionality--coming soon!)
+
+## To run locally 
 Clone this repository. Run `python search_local.py`
 
 After initialization, try searching for a term in the emails.
