@@ -19,6 +19,7 @@ print("Loading email data from: ", maildir)
 # A word map from word -> [authors]
 words_map = {}
 metadata = ['Message-ID:', 'http', 'Date:', 'From:', 'To:', 'cc:', 'Subject:', 'Mime-Version:', 'Content-Type:', 'Content-Transfer-Encoding:', 'X-From:', 'X-To:', 'X-cc:', 'X-bcc:', 'X-Folder:', 'X-Origin:', 'X-FileName:', '@', '________', '-----']
+stopwords = set(["i", "me", "my", "myself", "we", "our", "ours", "ourselves", "you", "your", "yours", "yourself", "yourselves", "he", "him", "his", "himself", "she", "her", "hers", "herself", "it", "its", "itself", "they", "them", "their", "theirs", "themselves", "what", "which", "who", "whom", "this", "that", "these", "those", "am", "is", "are", "was", "were", "be", "been", "being", "have", "has", "had", "having", "do", "does", "did", "doing", "a", "an", "the", "and", "but", "if", "or", "because", "as", "until", "while", "of", "at", "by", "for", "with", "about", "against", "between", "into", "through", "during", "before", "after", "above", "below", "to", "from", "up", "down", "in", "out", "on", "off", "over", "under", "again", "further", "then", "once", "here", "there", "when", "where", "why", "how", "all", "any", "both", "each", "few", "more", "most", "other", "some", "such", "no", "nor", "not", "only", "own", "same", "so", "than", "too", "very", "s", "t", "can", "will", "just", "don", "should", "now"])
 # Go through the maildir. For each individual, save the content from all_contents
 for filename in os.listdir(maildir):
     # Loop through all the individuals in the maildir
@@ -53,7 +54,7 @@ for filename in os.listdir(maildir):
                         word = regex.sub('', w)
 
                         # Updatewords_map
-                        if len(word) > 1:
+                        if len(word) > 1 and word not in stopwords:
                             # print("word: ", word)
                             if word not in words_map:
                                 words_map[word] = {person: []}
