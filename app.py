@@ -44,9 +44,10 @@ Initializing the trie and word map, which power the search functionality
 word_trie_fp = open('word_trie.pkl','rb')
 word_trie = pickle.load(word_trie_fp)
 print("Word trie loaded: ", word_trie)
+
 # load word map
-with open('word_map.json') as f:
-    word_map = json.load(f)
+with open('word_map.json', 'rb') as f:
+    word_map = pickle.load(f)
 print("Word map loaded")
 
 '''

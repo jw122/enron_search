@@ -27,8 +27,9 @@ def get_completions(search_term):
 if __name__ == '__main__':
     print("Initializing....")
     # open the mapping from words to individuals
-    with open('word_map.json') as f:
-        word_map = json.load(f)
+    with open('word_map.json', 'rb') as f:
+        word_map = pickle.load(f)
+    print("Word map loaded")
 
     # Open the word trie file created by process.py
     trie_data = os.environ.get('WORD_TRIE','word_trie.pkl')

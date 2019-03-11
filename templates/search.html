@@ -23,8 +23,8 @@
         },
         minLength: 1,
         select: function(event, ui) {
-          console.log("selected")
-        } //do something with the selected option
+          getResults()
+        }
     });
   })
 
@@ -35,43 +35,12 @@
 
       $(input).on('keyup', function () {
         clearTimeout(timer);
-        timer = setTimeout(inputDone, typeInterval);
+        timer = setTimeout(getResults, typeInterval);
       });
 
       $(input).on('keydown', function () {
         clearTimeout(timer);
       });
-
-      //user is done typing
-      function inputDone () {
-          var inpt = input.val()
-			  	console.log("key pressed: ", inpt)
-			  	if (inpt.length > 0) {
-					$.getJSON('/search', {
-					  term: inpt,
-					}, function(data) {
-            $("#resultDiv").empty();
-            $("#resultDiv").append(`<h4>Emails containing keyword "${inpt}":</h4>`)
-						console.log("email results: ", data.result)
-
-            Object.keys(data.result).forEach(function(key, index){
-              // console.log("key: ", key)
-              $("#resultDiv").append(`
-                <div class="card bg-dark mb-3" style="width: 18rem; margin-top:3%">
-                <div class="card-header text-white">
-                  ${key}
-                </div>
-                  <ul id=line-"${key}" class="list-group list-group-flush">
-                      <li class="list-group-item">${data.result[key]}</li>
-                  </ul>
-                </div>
-                `);
-            })
-
-					});
-					return false;
-			  	}
-      }
 
       // USE THIS IF SEARCHING AT EACH KEYSTROKE, NO WAIT FOR INPUT PAUSE
 			// $('#search_field').keyup(function(event) {
@@ -91,5 +60,35 @@
 
 		});
 
+          //user is done typing
+          function getResults () {
+              var inpt = $('#search_field').val()
+    			  	console.log("key pressed: ", inpt)
+    			  	if (inpt.length > 0) {
+    					$.getJSON('/search', {
+    					  term: inpt,
+    					}, function(data) {
+                $("#resultDiv").empty();
+                $("#resultDiv").append(`<h4>Emails containing keyword "${inpt}":</h4>`)
+    						console.log("email results: ", data.result)
+
+                Object.keys(data.result).forEach(function(key, index){
+                  // console.log("key: ", key)
+                  $("#resultDiv").append(`
+                    <div class="card bg-dark mb-3" style="width: 18rem; margin-top:3%">
+                    <div class="card-header text-white">
+                      ${key}
+                    </div>
+                      <ul id=line-"${key}" class="list-group list-group-flush">
+                          <li class="list-group-item">${data.result[key]}</li>
+                      </ul>
+                    </div>
+                    `);
+                })
+
+    					});
+    					return false;
+    			  	}
+          }
 
 </script>

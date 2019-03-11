@@ -75,10 +75,11 @@ for word in words_map:
     # email_trie.insert(word, words_map[word])
     word_trie.insert(word, None)
 
-# save trie to disk
+# save map and trie to disk
 print("saving word map...")
-with open('word_map.json', 'w') as f:
-    json.dump(words_map, f)
+with open('word_map.json', 'wb') as f:
+    # json.dump(words_map, f)
+    pickle.dump(words_map, f)
 
 # file_name = "email_trie_small.pkl"
 # # open the file for writing
