@@ -10,7 +10,19 @@ The [Enron email dataset](https://www.cs.cmu.edu/~./enron/) is a large folder co
 ## The Challenge
 This goal of this project is to implement a method of searching through the large Enron email dataset. It should behave like a lightweight search engine, with features like autocomplete and efficiency. It is meant for search _on a mobile device_, without connection to the internet and limited memory.
 
-(Web client--still simulating local functionality--coming soon!)
+Web client demo: http://enron-search.herokuapp.com/
+
+## Implementation
+The Enron email corpus is about 1 GB in size.
+
+The first step was to pre-process the content to create 2 main mappings:
+1. Mapping from word to individual whose inbox contains that word (and id's of respective files)
+2. A prefix tree from all the significant words in the entire corpus. This can be useful for functionality like autocomplete and searches like "lawsut" when user types "law"
+
+This processing step only needs to be done once.
+When the app is initialized with `app.py`, it loads the prefix tree (trie) and word map from disk. The prefix tree is queried as the user types, and the map is queried when the user has a pause in typing, selects a suggestion or hits the "Search" button. 
+
+![](result.png)
 
 ## To run locally 
 Clone this repository. Run `python search_local.py`
@@ -41,9 +53,7 @@ Files ending with `local.py` are intended for local testing and use a smaller su
 ### process_local.py
 From the Enron email dataset, creates the following mappings:  
 `word -> individuals with this word in their mailbox`  
-The words in this map are used to create a trie for "autocomplete" functionality
 
-`word -> email id's containing word` (for each individual, saved in people/ directory)
 
 ### search_local.py
 Uses trie to generate completions. Queries the word-to-people mapping, returning a list of individuals whose inboxes contain that term. Then, fetch the exact email id's containing that term in each individual's inbox
