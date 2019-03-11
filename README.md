@@ -10,7 +10,7 @@ The [Enron email dataset](https://www.cs.cmu.edu/~./enron/) is a large folder co
 ## The Challenge
 This goal of this project is to implement a method of searching through the large Enron email dataset. It should behave like a lightweight search engine, with features like autocomplete and efficiency. It is meant for search _on a mobile device_, without connection to the internet and limited memory.
 
-Web client demo: http://enron-search.herokuapp.com/
+Web client demo: http://enron-search.herokuapp.com/ (goes to sleep after 30 min of inactivity, can take a while to restart)
 
 ## Implementation
 The Enron email corpus is about 1 GB in size.
