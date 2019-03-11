@@ -8,6 +8,7 @@ itsdangerous==1.1.0
 Jinja2==2.10
 Mako==1.0.7
 MarkupSafe==1.1.1
+newrelic==4.14.0.115
 psycopg2==2.7.7
 psycopg2-binary==2.7.7
 python-dateutil==2.8.0
