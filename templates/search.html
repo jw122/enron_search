@@ -33,7 +33,7 @@
       var typeInterval = 1000;
       var input = $('#search_field')
 
-      $(input).on('keyup', function () {
+      $(input).on('input', function () {
         clearTimeout(timer);
         timer = setTimeout(getResults, typeInterval);
       });
