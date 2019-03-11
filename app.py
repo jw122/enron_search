@@ -45,7 +45,7 @@ word_trie_fp = open('word_trie.pkl','rb')
 word_trie = pickle.load(word_trie_fp)
 print("Word trie loaded: ", word_trie)
 # load word map
-with open('word_map_small.json') as f:
+with open('word_map.json') as f:
     word_map = json.load(f)
 print("Word map loaded")
 
@@ -70,12 +70,12 @@ def get_completions():
 
 @app.route('/search')
 def search():
-	try:
-		keyword = request.args.get('term', 0, type=str)
+    try:
+        keyword = request.args.get('term', 0, type=str)
         if keyword in word_map:
             return jsonify(result=word_map[keyword])
-	except Exception as e:
-		return str(e)
+    except Exception as e:
+        return str(e)
 
 @app.route("/get/<id_>")
 def get_by_id(id_):

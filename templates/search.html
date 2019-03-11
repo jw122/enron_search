@@ -47,7 +47,7 @@
           var inpt = input.val()
 			  	console.log("key pressed: ", inpt)
 			  	if (inpt.length > 0) {
-					$.getJSON('/get_emails', {
+					$.getJSON('/search', {
 					  term: inpt,
 					}, function(data) {
             $("#resultDiv").empty();
