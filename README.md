@@ -69,5 +69,5 @@ The biggest challenge with this project was optimizing for disk vs memory use. T
 
 In the current state, this tool loads a pre-processed trie into memory as well as the word map (a python dictionary). The trie works reasonably well to enable autocomplete, but loading a huge python dictionary into memory proves burdensome.
 
-One way to address this conver the contentes of the dictionary into database objects which can be queried at runtime. 
+One way to address this convert the contents of the dictionary into database objects which can be queried at runtime. 
 You'll notice that in parts of the code like `app.py`, there's already some implementation for storing information into a database using SQLAlchemy.
