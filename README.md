@@ -1,33 +1,49 @@
-# Enron Search
+# Search Enron Emails 
 
 ![](enron-search.gif)
 
 A mini search engine for Enron emails
+Web client demo (most effective on a desktop browser): http://enron-search.herokuapp.com/ 
 
-## About
-The [Enron email dataset](https://www.cs.cmu.edu/~./enron/) is a large folder containing emails exchanged by senior management of Enron, organized into folders. This became public following the organization's fraud and corruption scandal, and contains a total of about 0.5M messages.
+## About the data
+The [Enron email dataset](https://www.cs.cmu.edu/~./enron/) is a large folder containing emails exchanged by senior management of Enron, organized into folders. This became public following the organization's fraud and corruption scandal, and contains a total of about 0.5M messages (1 GB).
 
 ## The Challenge
-This goal of this project is to implement a method of searching through the large Enron email dataset. It should behave like a lightweight search engine, with features like autocomplete and efficiency. It is meant for search _on a mobile device_, without connection to the internet and limited memory.
-
-Web client demo: http://enron-search.herokuapp.com/ (goes to sleep after 30 min of inactivity, can take a while to restart)
+This goal of this project is to implement a method of searching through the large Enron email dataset. It should behave like a lightweight search engine, with features like autocomplete and efficiency. It is meant for search _on a mobile device_, without connection to the internet and limited memory. But contents can be stored in disk.
 
 ## Implementation
 The Enron email corpus is about 1 GB in size.
 
 The first step was to pre-process the content to create 2 main mappings:
 1. Mapping from word to individual whose inbox contains that word (and id's of respective files)
-2. A prefix tree from all the significant words in the entire corpus. This can be useful for functionality like autocomplete and searches like "lawsut" when user types "law"
+2. A prefix tree from all the significant words in the entire corpus. This can be useful for functionality like autocomplete and searches like "lawsuit" when user types "law"
 
 This processing step only needs to be done once.
-When the app is initialized with `app.py`, it loads the prefix tree (trie) and word map from disk. The prefix tree is queried as the user types, and the map is queried when the user has a pause in typing, selects a suggestion or hits the "Search" button. 
+When the app is initialized with `app.py`, it loads the prefix tree (trie) and word map from disk. The prefix tree is queried as the user types, and the map is queried when the user hits a pause in typing, selects a suggestion or hits the "Search" button. 
 
 ![](result.png)
 
-## To run locally 
-Clone this repository. Run `python search_local.py`
+Files ending with `_local.py` are intended for local testing and use a smaller subset of the email data.
 
-After initialization, try searching for a term in the emails.
+### `process.py` and `process_local.py`:
+From the Enron email dataset, creates the following mapping:  
+`word -> individuals with this word in their mailbox -> email ID containing that word (for each individual)`  
+
+### `trie.py`: Autocomplete functionality
+A standard prefix tree supporting insertion, search, and traversing through children to get suffixes
+
+### `app.py`: User interactions
+With the help of Flask, queries the word map and trie to display results in the UI.
+
+
+## Local CLI version
+To test the functionality locally (without any connection to the internet):
+
+Clone this repository (The sample set was downsized to avoid bloating this repository on GitHub).
+
+Run `python search_local.py`
+
+After initialization, try searching for a term in the emails. 
 
 Example:
 ```
@@ -48,12 +64,10 @@ search term: bye
 Word bye was not found. Try another one!
 ```
 
-Files ending with `local.py` are intended for local testing and use a smaller subset of the email data.
+## Challenges and Potential Improvements
+The biggest challenge with this project was optimizing for disk vs memory use. There are half a million objects in this corpus. How do we return all the emails containing a term, without looking through each email? And how do we optimize for mobile usage, so that the user can see results and term suggestions as they type? 
 
-### process_local.py
-From the Enron email dataset, creates the following mappings:  
-`word -> individuals with this word in their mailbox`  
+In the current state, this tool loads a pre-processed trie into memory as well as the word map (a python dictionary). The trie works reasonably well to enable autocomplete, but loading a huge python dictionary into memory proves burdensome.
 
-
-### search_local.py
-Uses trie to generate completions. Queries the word-to-people mapping, returning a list of individuals whose inboxes contain that term. Then, fetch the exact email id's containing that term in each individual's inbox
+One way to address this conver the contentes of the dictionary into database objects which can be queried at runtime. 
+You'll notice that in parts of the code like `app.py`, there's already some implementation for storing information into a database using SQLAlchemy.
